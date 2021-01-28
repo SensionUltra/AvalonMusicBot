@@ -4,7 +4,7 @@ const Distube = require("distube");
 const client = new Discord.Client({disableMentions: "everyone"});
 const config ={
     prefix: "?",
-    token: process.env.TOKEN
+    token: process.env.token
 
 }
 const distube = new Distube(client, { searchSongs: true, emitNewSongOnly: false, highWaterMark: 1<<25})
