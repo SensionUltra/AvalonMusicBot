@@ -1,2 +1,3 @@
 # AvalonMusicBot
-This the discord Music Bot that i have created
+This is a discord bot created by Awoken#6969 on discord
+This discord bot is NOT open source
