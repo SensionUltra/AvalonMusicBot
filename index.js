@@ -1,6 +1,4 @@
-/////////////////
-//configuration//
-/////////////////
+//config
 const Discord = require("discord.js");
 const { getLyrics } = require('genius-lyrics-api');
 const DisTube = require("distube");
