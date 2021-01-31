@@ -82,14 +82,12 @@ const filters = [
     "purebass",
     "treble"
 ];
-/////////////////
-//////Events/////
-/////////////////
+//events
 client.login(config.token); //starts the bot
 //log when ready and status
 client.on("ready", () => {
     console.log(` :: Bot has started as : ${client.user.tag}`);
-    client.user.setPresence({status: "online"}); //change to online
+    client.user.setPresence({status: "online"});
     
     setInterval(() => {
         stateswitch = !stateswitch; //change state
@@ -100,17 +98,17 @@ client.on("ready", () => {
 //log when reconnect
 client.on('reconnecting', () => {
     console.log(' :: Reconnecting!');
-    client.user.setPresence({status: "offline"}); //change to offline
+    client.user.setPresence({status: "offline"}); 
 });
 //log when disconnecting
 client.on('disconnect', () => {
     console.log(' :: Disconnect!'); 
-    client.user.setPresence({status: "offline"}); //change to offline
+    client.user.setPresence({status: "offline"});
 });
 
 client.on("message", async message => {
-    if (message.author.bot) return; //if a bot return 
-    if (!message.guild) return;     //if not in a guild return
+    if (message.author.bot) return;
+    if (!message.guild) return;     
     
     client.settings.ensure(message.guild.id, {
         prefix: "+"
@@ -118,24 +116,22 @@ client.on("message", async message => {
 
     let prefix = client.settings.get(message.guild.id, `prefix`);
     
-    if (prefix === null) prefix = config.PREFIX;           //if not prefix set it to standard prefix in the config.json file
+    if (prefix === null) prefix = config.PREFIX;           
     
-    const args = message.content.slice(prefix.length).trim().split(/ +/g); //arguments of the content
-    const command = args.shift();                                          //defining the command msgs
+    const args = message.content.slice(prefix.length).trim().split(/ +/g); 
+    const command = args.shift();                                          
 
     if (message.content.includes(client.user.id)) {
        return message.reply(new Discord.MessageEmbed().setColor("#c219d8").setAuthor(`${message.author.username}, My Prefix is ${prefix}, to get started; type ${prefix}help`, message.author.displayAvatarURL({ dynamic: true }),"https://discord.gg/BnbkER6DYQ"));
     }
-    if (message.content.startsWith(prefix)) { //if its a command react with a random emoji
-        let random = getRandomInt(8);         //get the actual random number
-        message.react(emojis[random]);        //react with the emoji
+    if (message.content.startsWith(prefix)) { 
+        let random = getRandomInt(8);        
+        message.react(emojis[random]);        
     }
-    else { //if not a command skip
+    else { 
         return; 
     }
-///////////////////
-/////COMMANDS//////
-///////////////////
+//commmands
 try{
 
     if (command === "invite" || command === "add"){
@@ -633,10 +629,8 @@ distube
     });
     
 
-///////////////
-///FUNCTIONS///
-///////////////
-//function embeds creates embeds
+
+//fumctions
 function embedbuilder(client, message, color, title, description, thumbnail) {
     try{   let embed = new Discord.MessageEmbed()
         .setColor(color)
@@ -916,10 +910,7 @@ function lyricsEmbed(message, lyrics, song) {
  }
 }  
 
-/////////////
-///GENERAL///
-/////////////
-//this function is for delaying stuff if needed
+//general stuffs
 function delay(delayInms) {
     return new Promise(resolve => {
         setTimeout(() => {
