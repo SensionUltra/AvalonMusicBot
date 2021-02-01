@@ -89,7 +89,7 @@ client.on("ready", () => {
     
     setInterval(() => {
         stateswitch = !stateswitch; //change state
-        if (stateswitch)  client.user.setActivity(`${config.PREFIX}help | dsc.gg/avalonbot`, { type: "LISTENING" });
+        if (stateswitch)  client.user.setActivity(`${config.PREFIX}help | avalonbot.xyz`, { type: "LISTENING" });
                     else  client.user.setActivity(`${client.guilds.cache.reduce((c, g) => c + g.memberCount, 0)} Users | ${client.guilds.cache.size} Servers`, { type: "PLAYING" });
     }, 5000); //5 second delay
 })
@@ -176,10 +176,10 @@ try{
         >>> \`${prefix}gate\` | \`${prefix}haas\` | \`${prefix}pulsator\` | \`${prefix}surrounding\` | \`${prefix}clear\` | \`${prefix}8d\` | \`${prefix}bassboost\` | \`${prefix}echo\` | \`${prefix}karaoke\` | \`${prefix}nightcore\` | \`${prefix}vaporwave\` | \`${prefix}flanger\` | \`${prefix}subboost\` | \`${prefix}phaser\` | \`${prefix}tremolo\` | \`${prefix}vibrato\` | \`${prefix}reverse\` | \`${prefix}treble\` | \`${prefix}clear\`   
         `)
         .addField("***SUPPORTED SOURCES:***",`
-        >>> \`Youtube\`, \`Soundcloud\`, [\`More\`](https://www.youtube.com/watch?v=dQw4w9WgXcQ), ...
+        >>> \`Youtube\`
         `)
         .addField("***BOT BY:***",`
-        >>> <@712170999222632469> [\`Website\`](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+        >>> <@712170999222632469> [\`Website\`](avalonbot.xyz)
         `)
         .addField("***SUPPORT:***",`
         >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)
