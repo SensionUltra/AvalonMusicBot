@@ -4,7 +4,7 @@ const { getLyrics } = require('genius-lyrics-api');
 const DisTube = require("distube");
 const radio = require("./radio");
 const config = {
-    PREFIX: "t!",
+    PREFIX: "+",
     token: process.env.token,
     geniusapi: 'A-NJCjTP9D0UeSuwQSCDkY3uJPnbPizfM1s_g_Y6f-xnLgh0vV1A3ycvWL9MUzjd'
 }
