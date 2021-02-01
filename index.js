@@ -5,7 +5,7 @@ const DisTube = require("distube");
 const radio = require("./radio");
 const config = {
     PREFIX: "t!",
-    token: "ODA1ODI5ODg4NDkzNjE3MTk1.YBglkQ.9oVPJbRg33Bl2KcDMFoJnLR4KLU",
+    token: process.env.token,
     geniusapi: 'A-NJCjTP9D0UeSuwQSCDkY3uJPnbPizfM1s_g_Y6f-xnLgh0vV1A3ycvWL9MUzjd'
 }
 
