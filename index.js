@@ -4,8 +4,8 @@ const { getLyrics } = require('genius-lyrics-api');
 const DisTube = require("distube");
 const radio = require("./radio");
 const config = {
-    PREFIX: "+",
-    token: process.env.token,
+    PREFIX: "t!",
+    token: "ODA1ODI5ODg4NDkzNjE3MTk1.YBglkQ.9oVPJbRg33Bl2KcDMFoJnLR4KLU",
     geniusapi: 'A-NJCjTP9D0UeSuwQSCDkY3uJPnbPizfM1s_g_Y6f-xnLgh0vV1A3ycvWL9MUzjd'
 }
 
@@ -16,7 +16,6 @@ const client = new Discord.Client({ disableMentions: "all" });
 client.settings = new Enmap({ name: "settings" });
 
 const distube = new DisTube(client, {
-    youtubeCookie: "Your cookie must go here !!!", 
     searchSongs: true, 
     emitNewSongOnly: true, 
     highWaterMark: 50 * 1024 * 1024, 
@@ -44,7 +43,7 @@ const distube = new DisTube(client, {
         "flanger": "flanger",
         "gate": "agate",
         "haas": "haas",
-        "mcompand": "mcompand"
+        "clear": "mcompand"
     }
 })
 let stateswitch = false;
@@ -52,14 +51,15 @@ let emojis = [
     "🟢", 
     "🟩", 
     "✅", 
-    "☑️", 
+    "✔", 
     "💚", 
     "👌", 
     "👍", 
     "💪"
 ];
+const db = require('quick.db');
 const filters = [
-    "mcompand",
+    "clear",
     "gate",
     "haas",
     "pulsator",
@@ -80,9 +80,10 @@ const filters = [
     "purebass",
     "treble"
 ];
+
 //events
-client.login(config.token); //starts the bot
-//log when ready and status
+client.login(config.token);
+
 client.on("ready", () => {
     console.log(` :: Bot has started as : ${client.user.tag}`);
     client.user.setPresence({status: "online"});
@@ -143,34 +144,34 @@ try{
         .setColor("#c219d8")
         .setTitle("***__COMMANDS__***")
         .setURL("https://bit.ly/3j4iRYP")
-        .setAuthor(message.author.tag, message.member.user.displayAvatarURL({dynamic:true}),"https://bit.ly/3j4iRYP")
+        .setAuthor(message.author.tag, message.member.user.displayAvatarURL({dynamic:true}),"https://avalonbot.xyz")
         .setFooter(client.user.username + " | Syntax:  <>...must    []...optional", client.user.displayAvatarURL())
         .setDescription(`
         **Prefix:** \`${prefix}\`   *change with:* \`${prefix}prefix <NEW PREFIX>\`
 
-       >>> \`${prefix}help\`  \`${prefix}h\`  ➖➖ *List of all Commands*
-        \`${prefix}play <URL/NAME>\`  \`${prefix}p\`  ➖➖ *Plays a song*
-        \`${prefix}radio [radiostation]\`  ➖➖ *Plays a radiostation*
-        \`${prefix}search <URL/NAME>\`  ➖➖ *Searches for 15 results*
-        \`${prefix}status\`  ➖➖ *Shows queue status*
-        \`${prefix}nowplaying\`  \`${prefix}np\`  ➖➖ *Shows current song*
-        \`${prefix}pause\`  ➖➖ *Pauses the song*
-        \`${prefix}resume\`  \`${prefix}r\`  ➖➖ *Resume the song*
-        \`${prefix}shuffle\`  \`${prefix}mix\`  ➖➖ *Shuffles the queue*
-        \`${prefix}playskip\`  \`${prefix}ps\`  ➖➖ *Plays new song and skips current*
-        \`${prefix}autoplay\`  \`${prefix}ap\`  ➖➖ *Enables autoplay - random similar songs
-        \`${prefix}skip\`  \`${prefix}s\`  ➖➖ *Skips current song*
-        \`${prefix}stop\`  \`${prefix}leave\`  ➖➖ *Stops playing and leaves the channel*
-        \`${prefix}seek <DURATION>\`  ➖➖ *Moves in the Song in: seconds*
-        \`${prefix}volume <VOLUME\`  \`${prefix}vol\`  ➖➖ *Changes volume*
-        \`${prefix}queue\`  \`${prefix}qu\`  ➖➖ *Shows current Queue*
-        \`${prefix}loop <0/1/2>\`  \`${prefix}rp\`  ➖➖ *Enables loop for off / song / queue*
-        \`${prefix}lyircs\`  \`${prefix}ly\`  ➖➖ *Shows lyrics for this song*
-        \`${prefix}jump <Queue num.>\`  ➖➖ *Jumps to a queue song*
-        \`${prefix}prefix <PREFIX>\`  ➖➖ *Changes the prefix*
-        \`${prefix}ping\`  ➖➖ *Gives you the ping*
-        \`${prefix}uptime\`  ➖➖ *Shows you the Bot's Uptime*
-        \`${prefix}invite\`  ➖➖ *Invite the Bot to your Server :heart:*
+       >>> \`${prefix}help\`  \`${prefix}h\`  ═════ *List of all Commands*
+        \`${prefix}play <URL/NAME>\`  \`${prefix}p\`  ═════ *Plays a song*
+        \`${prefix}radio [radiostation]\`  ═════ *Plays a radiostation*
+        \`${prefix}search <URL/NAME>\`  ═════ *Searches for 15 results*
+        \`${prefix}status\`  ═════ *Shows queue status*
+        \`${prefix}nowplaying\`  \`${prefix}np\`  ═════ *Shows current song*
+        \`${prefix}pause\`  ═════ *Pauses the song*
+        \`${prefix}resume\`  \`${prefix}r\`  ═════ *Resume the song*
+        \`${prefix}shuffle\`  \`${prefix}mix\`  ═════ *Shuffles the queue*
+        \`${prefix}playskip\`  \`${prefix}ps\`  ═════ *Plays new song and skips current*
+        \`${prefix}autoplay\`  \`${prefix}ap\`  ═════ *Enables autoplay - random similar songs
+        \`${prefix}skip\`  \`${prefix}s\`  ═════ *Skips current song*
+        \`${prefix}stop\`  \`${prefix}leave\`  ═════ *Stops playing and leaves the channel*
+        \`${prefix}seek <DURATION>\`  ═════ *Moves in the Song in: seconds*
+        \`${prefix}volume <VOLUME\`  \`${prefix}vol\`  ═════ *Changes volume*
+        \`${prefix}queue\`  \`${prefix}qu\`  ═════ *Shows current Queue*
+        \`${prefix}loop <0/1/2>\`  \`${prefix}rp\`  ═════ *Enables loop for off / song / queue*
+        \`${prefix}lyircs\`  \`${prefix}ly\`  ═════ *Shows lyrics for the current song*
+        \`${prefix}jump <Queue num.>\`  ═════ *Jumps to a queue song*
+        \`${prefix}prefix <PREFIX>\`  ═════ *Changes the prefix*
+        \`${prefix}ping\`  ═════ *Gives you the ping*
+        \`${prefix}uptime\`  ═════ *Shows you the Bot's Uptime*
+        \`${prefix}invite\`  ═════ *Invite the Bot to your Server :heart:*
         `)
         .addField("***FILTER COMMANDS:***",`
         >>> \`${prefix}gate\` | \`${prefix}haas\` | \`${prefix}pulsator\` | \`${prefix}surrounding\` | \`${prefix}clear\` | \`${prefix}8d\` | \`${prefix}bassboost\` | \`${prefix}echo\` | \`${prefix}karaoke\` | \`${prefix}nightcore\` | \`${prefix}vaporwave\` | \`${prefix}flanger\` | \`${prefix}subboost\` | \`${prefix}phaser\` | \`${prefix}tremolo\` | \`${prefix}vibrato\` | \`${prefix}reverse\` | \`${prefix}treble\` | \`${prefix}clear\`   
@@ -179,7 +180,7 @@ try{
         >>> \`Youtube\`
         `)
         .addField("***BOT BY:***",`
-        >>> <@712170999222632469> [\`Website\`](avalonbot.xyz)
+        >>> <@712170999222632469> [\`Website\`](https://avalonbot.xyz)
         `)
         .addField("***SUPPORT:***",`
         >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)
@@ -502,128 +503,91 @@ try{
     console.error
  }
 })
-///////////////
-////DISTUBE////
-///////////////
+//distube
 distube
     .on("playSong", async (message, queue, song) => {
-       
-    try{
-        var playingMessage = await embedbuilder(client, message, "#c219d8", "Playing new Song!", `Song: [\`${song.name}\`](${song.url})  -  \`${song.formattedDuration}\` \n\nRequested by: ${song.user}\n\nVolume: \`${queue.volume} %\`\nLoop: \`${queue.repeatMode ? "On" : "Off"}\`\nAutoplay: \`${queue.autoplay ? "On" : "Off"}\`\nFilter: \`${queue.filter || "OFF"}\``, song.thumbnail)
-        await playingMessage.react("⏭");
-        await playingMessage.react("⏹");
-        await playingMessage.react("🔉");
-        await playingMessage.react("🔊");
-        await playingMessage.react("◀️");
-        await playingMessage.react("▶️");
-    }
-    catch{
-        console.error(error);
-    }
-    const filter = (reaction, user)=>
-    ["⏭", "⏹", "🔉", "🔊", "◀️", "▶️"].includes(reaction.emoji.name) && user.id !== message.client.user.id;
-    var collector = playingMessage.createReactionCollector(filter, {
-      time: song.duration > 0 ? song.duration * 1000 : 600000
-    });
-    collector.on("collect", (reaction, user) => {
-        if(!queue) return;
-        const member = message.guild.member(user);
-        if(member.voice.connection && member.voice.connection !== member.guild.me.voice.connection) return;
-        switch(reaction.emoji.name){
-            case "⏭":
-                reaction.users.remove(user).catch(console.error);       
-                embedbuilder(client, message, "#c219d8", "SKIPPED!", `Skipped the song`).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-                distube.skip(message);
-            break;
-
-            case "⏹":
-                reaction.users.remove(user).catch(console.error);       
-                embedbuilder(client, message, "RED", "STOPPED!", `Left the channel`).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-                distube.stop(message);
-            break;
-
-            case "🔉":
-                reaction.users.remove(user).catch(console.error);       
-                distube.setVolume(message, Number(queue.volume)-10);
-                embedbuilder(client, message, "#c219d8", "Volume!", `Redused the Volume to \`${queue.volume}\``).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-            break;
-
-            case "🔊":
-                reaction.users.remove(user).catch(console.error);       
-                distube.setVolume(message, Number(queue.volume)+10);
-                embedbuilder(client, message, "#c219d8", "Volume!", `Raised the Volume to \`${queue.volume}\``).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-            break;
-
-            case "◀️":
-                reaction.users.remove(user).catch(console.error);       
-                embedbuilder(client, message, "#c219d8", "Seeked!", `Seeked the song for \`-10 seconds\``).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-                return distube.seek(message, Number(-10000));
-            break;
-
-            case "▶️":
-                reaction.users.remove(user).catch(console.error);       
-                embedbuilder(client, message, "#c219d8", "Seeked!", `Seeked the song for \`+10 seconds\``).then(msg => msg.delete({timeout: 3000}).catch(console.error))
-                return distube.seek(message, Number(10000));
-            break;
-
-            default:
-            reaction.users.remove(user).catch(console.error);    
-            break;
-        }
-    });
-    collector.on("end", ()=>{
-        playingMessage.reactions.removeAll().catch(console.error);
-        playingMessage.delete({timeout: client.ws.ping}).catch(console.error);
-    })
-
+        try{ playsongyes(message, queue, song);
+        }catch (error){
+            console.error
+         }
     })
     .on("addSong", (message, queue, song) => {
-
-        return embedbuilder(client, message, "#c219d8", "Added a Song!", `Song: [\`${song.name}\`](${song.url})  -  \`${song.formattedDuration}\` \n\nRequested by: ${song.user} \n\nVolume: \`${queue.volume} %\`\nLoop: \`${queue.repeatMode ? "On" : "Off"}\`\nAutoplay: \`${queue.autoplay ? "On" : "Off"}\`\nFilter: \`${queue.filter || "OFF"}\`\nEstimated Time: ${queue.songs.length - 1} Song(s)\`${(Math.floor((queue.duration - song.duration) / 60 * 100) / 100).toString().replace(".", ":")}\`\nQueue duration: \`${queue.formattedDuration}\``, song.thumbnail)
+        try{    return embedbuilder(client, message, "#c219d8", "Added a Song!", `Song: [\`${song.name}\`](${song.url})  -  \`${song.formattedDuration}\` \n\nRequested by: ${song.user}\n\nEstimated Time: ${queue.songs.length - 1} song(s) - \`${(Math.floor((queue.duration - song.duration) / 60 * 100) / 100).toString().replace(".", ":")}\`\nQueue duration: \`${queue.formattedDuration}\``, song.thumbnail)
+    }catch (error){
+        console.error
+     }
     })
     .on("playList", (message, queue, playlist, song) => {
-        return embedbuilder(client, message, "#c219d8", "Playling playlist", `Playlist: [\`${playlist.title}\`](${playlist.url})  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}\n\nstarting playing Song: \`${song.name}\`  -  \`${song.formattedDuration}\`\n${status(queue)}`, playlist.thumbnail)
+        try{   playplaylistyes(message, queue, playlist, song);
+    }catch (error){
+        console.error
+     }
     })
     .on("addList", (message, queue, playlist, song) => {
-        return embedbuilder(client, message, "#c219d8", "Added a Playling!", `Playlist: [\`${playlist.title}\`](${playlist.url})  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}`, playlist.thumbnail)
+        try{    return embedbuilder(client, message, "#c219d8", "Added a Playling!", `Playlist: [\`${playlist.name}\`](${playlist.url})  -  \`${playlist.songs.length} songs\` \n\nRequested by: ${song.user}`, playlist.thumbnail)
+    }catch (error){
+        console.error
+     }
     })
     .on("searchResult", (message, result) => {
-        let i = 0;
+        try{    let i = 0;
         return embedbuilder(client, message, "#c219d8", "", `**Choose an option from below**\n${result.map(song => `**${++i}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`)
+    }catch (error){
+        console.error
+     }
     })
     .on("searchCancel", (message) => {
-        try{
+        try {
             message.reactions.removeAll();
             message.react("❌")
-        }catch{
+        } catch (error) {
+            console.error(error)
+            
         }
-        return embedbuilder(client, message, "RED", `Searching canceled`, "").then(msg => msg.delete({timeout: 5000}).catch(console.error))
+        try{   return embedbuilder(client, message, "RED", `Searching canceled`, "").then(msg => msg.delete({ timeout: 5000 }).catch(console.error))
+    }catch (error){
+        console.error
+     }
     })
     .on("error", (message, err) => {
-        try{
+        try {
             message.reactions.removeAll();
             message.react("❌")
-        }catch{
+        } catch (error) {
+            console.error(error)    
         }
-        return embedbuilder(client, message, "RED", "An error encountered:", err)
+       console.log(err);
+        try{   return embedbuilder(client, message, "RED", "An error encountered:", "```"+err+"```")
+    }catch (error){
+        console.error
+     }
     })
     .on("finish", message => {
-        try{ return embedbuilder(client, message, "RED", "LEFT THE CHANNEL", "There are no more songs left😓").then(msg => msg.delete({ timeout: 5000 }).catch(console.error))
+        try{ return embedbuilder(client, message, "RED", "LEFT THE CHANNEL", "There are no more songs left").then(msg => msg.delete({ timeout: 5000 }).catch(console.error))
     }catch (error){
         console.error
      }
     })
     .on("empty", message => {
-        
-        return embedbuilder(client, message, "RED", "Left the channel cause it got empty!").then(msg => msg.delete({timeout: 5000}).catch(console.error))
+
+        try{   return embedbuilder(client, message, "RED", "Left the channel cause it got empty!").then(msg => msg.delete({ timeout: 5000 }).catch(console.error))
+    }catch (error){
+        console.error
+     }
     })
     .on("noRelated", message => {
-        return embedbuilder(client, message, "RED", "Can't find related video to play. Stop playing music.").then(msg => msg.delete({timeout: 5000}).catch(console.error))
+        try{    return embedbuilder(client, message, "RED", "Can't find related video to play. Stop playing music.").then(msg => msg.delete({ timeout: 5000 }).catch(console.error))
+    }catch (error){
+        console.error
+     }
     })
     .on("initQueue", queue => {
-        queue.autoplay = false;
-        queue.volume = 69;
-        queue.filter = filters[0];
+        try{   queue.autoplay = false;
+        queue.volume = 50;
+        queue.filter = filters[5];
+    }catch (error){
+        console.error
+     }
     });
     
 
@@ -871,8 +835,8 @@ function QueueEmbed(queue) {
         k += 10;
         const info = current.map((track) => `**${++j} -** [\`${track.name}\`](${track.url})`).join("\n")
         const embed = new Discord.MessageEmbed()
-            .setTitle("Server Queue")
-            .setColor("#c219d8")
+            .setTitle("Current Queue")
+            .setColor("PURPLE")
             .setDescription(`**Current Song - [\`${queue[0].name}\`](${queue[0].url})**\n\n${info}`)
             .setFooter(client.user.username, client.user.displayAvatarURL())
         embeds.push(embed);
