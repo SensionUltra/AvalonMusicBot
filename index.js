@@ -7,7 +7,7 @@ const radio = require("./radio");
 const got = require("got")
 const fs = require('fs')
 const config = {
-    PREFIX: "t!",
+    PREFIX: "a!",
     token: process.env.token,
     geniusapi: 'YHF-8vxzL08XvWlPiD8-kE-4lRFVzlxh8CAYeZsbIQ_nS35S6CBeuVunxbhkok88'
 }
@@ -191,6 +191,8 @@ try{
         `)
         .addField("***SUPPORT:***",`
         >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)`)
+        
+         message.channel.send(helpembed)
     }
     else if (command === "prefix") {
 
