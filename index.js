@@ -7,8 +7,8 @@ const radio = require("./radio");
 const got = require("got")
 const fs = require('fs')
 const config = {
-    PREFIX: "t!",
-    token: "ODA1ODI5ODg4NDkzNjE3MTk1.YBglkQ.curolUJInw-tG_DQSTEUaDOUu_Q",
+    PREFIX: "a!",
+    token: process.env.token,
     geniusapi: 'YHF-8vxzL08XvWlPiD8-kE-4lRFVzlxh8CAYeZsbIQ_nS35S6CBeuVunxbhkok88'
 }
 
