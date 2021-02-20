@@ -7,7 +7,7 @@ const radio = require("./radio");
 const got = require("got")
 const fs = require('fs')
 const config = {
-    PREFIX: "a!",
+    PREFIX: "t!",
     token: process.env.token,
     geniusapi: 'YHF-8vxzL08XvWlPiD8-kE-4lRFVzlxh8CAYeZsbIQ_nS35S6CBeuVunxbhkok88'
 }
@@ -65,7 +65,6 @@ let emojis = [
     "💪"
 ];
 const db = require('quick.db');
-const kick = require("./commands/kick");
 const filters = [
     "clear",
     "gate",
