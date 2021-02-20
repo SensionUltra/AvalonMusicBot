@@ -191,82 +191,6 @@ try{
         `)
         .addField("***SUPPORT:***",`
         >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)`)
-
-        let helpembed2 = new Discord.MessageEmbed()
-        .setColor("#c219d8")
-        .setTitle("***MODERATION COMMANDS***")
-        .setURL("https://bit.ly/3j4iRYP")
-        .setAuthor(message.author.tag, message.member.user.displayAvatarURL({dynamic:true}),"https://avalonbot.xyz")
-        .setFooter(client.user.username + " | Syntax:  <>...must    []...optional", client.user.displayAvatarURL())
-        .setDescription(`
-        **Prefix:** \`${prefix}\`   *change with:* \`${prefix}prefix <NEW PREFIX>\`
-
-        \`${prefix}ban [user]\`  ═════ *Bans the user from the guild*
-        \`${prefix}kick [user]\` ═════ *Kicks the user from the guild*
-        \`${prefix}mute [user] <duration>\`  ═════ *Mutes the user*
-        \`${prefix}purge [number]\` ═════ *Deletes messages*
-      
-        `)
-        .addField("***BOT BY:***",`
-        >>> <@712170999222632469> [\`Website\`](https://avalonbot.xyz)
-        `)
-        .addField("***SUPPORT:***",`
-        >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)`)
-
-        let helpembed3 = new Discord.MessageEmbed()
-        .setColor("#c219d8")
-        .setTitle("***FUN COMMANDS***")
-        .setURL("https://bit.ly/3j4iRYP")
-        .setAuthor(message.author.tag, message.member.user.displayAvatarURL({dynamic:true}),"https://avalonbot.xyz")
-        .setFooter(client.user.username + " | Syntax:  <>...must    []...optional", client.user.displayAvatarURL())
-        .setDescription(`
-        **Prefix:** \`${prefix}\`   *change with:* \`${prefix}prefix <NEW PREFIX>\`
-
-        \`${prefix}meme\`  ═════ *Sends a meme from reddit*
-        \`${prefix}say\`  ═════ *repeats what you said in embed*
-   
-        `)
-        .addField("***BOT BY:***",`
-        >>> <@712170999222632469> [\`Website\`](https://avalonbot.xyz)
-        `)
-        .addField("***SUPPORT:***",`
-        >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)`)
-
-        let helpembed4 = new Discord.MessageEmbed()
-        .setColor("#c219d8")
-        .setTitle("***MISC COMMANDS***")
-        .setURL("https://bit.ly/3j4iRYP")
-        .setAuthor(message.author.tag, message.member.user.displayAvatarURL({dynamic:true}),"https://avalonbot.xyz")
-        .setFooter(client.user.username + " | Syntax:  <>...must    []...optional", client.user.displayAvatarURL())
-        .setDescription(`
-        **Prefix:** \`${prefix}\`   *change with:* \`${prefix}prefix <NEW PREFIX>\`
-
-        \`${prefix}calculator\`  ═════ *Works like a calculator*
-
-   
-        `)
-        .addField("***BOT BY:***",`
-        >>> <@712170999222632469> [\`Website\`](https://avalonbot.xyz)
-        `)
-        .addField("***SUPPORT:***",`
-        >>> [\`Server\`](https://discord.gg/BnbkER6DYQ) | [\`Invite\`](https://bit.ly/3j4iRYP)`)
-
-
-        let pages = [
-            helpembed,
-            helpembed2,
-            helpembed3,
-            helpembed4
-        ]
-
-        let emojis = [
-            "⬅️",
-            "➡️"
-        ]
-
-        paginate(message, pages, emojis, 120000)
-
-        return;
     }
     else if (command === "prefix") {
 
@@ -516,32 +440,6 @@ try{
         await message.channel.bulkDelete(2)
         return
     }
-    else if (command === "kick"){
-        if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("You can\`t use that")
-        if(!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("I don\`t have the right permissions")
-
-        const member = message.mentions.members.first() || message.guild.members.cache.get(args[1]);
-
-        if(args[1]) return message.channel.send('Please specify a user')
-
-        if(!member) return message.channel.send("Cant\`t seem to find this user sorry:(")
-        if(!member.kickable) return message.channel.send("This user can\`t be kicked. It is either because they are a Mod/admin, or their highest role is higher than mine")
-
-        if(member.id === message.author.id) return message.channel.send("You can\`t kick yourself")
-
-        let reason = args.slice(2).join(" ");
-
-        if(!reason) reason = "No reason given";
-
-        member.kick(reason)
-        .catch(err => {
-            if(err) return message.channel.send("Oh no something went wrong")
-        })
-        
-            
-            return embedbuilder(client, message, "GREEN", "Kicked:", member)
-        
-    }
     else if (command === "queue" || command === "qu") {
 
         let currentPage = 0;
@@ -603,30 +501,6 @@ try{
         const saymessage = args.join(" ");
         const embedsay = embedbuilder(client, message, "GREEN", `${saymessage}`)
         message.delete().catch(error);
-    }
-    else if (command === "meme") {
-        const embed = new Discord.MessageEmbed();
-	got('https://www.reddit.com/r/memes/random/.json')
-		.then(response => {
-			const [list] = JSON.parse(response.body);
-			const [post] = list.data.children;
-
-			const permalink = post.data.permalink;
-			const memeUrl = `https://reddit.com${permalink}`;
-			const memeImage = post.data.url;
-			const memeTitle = post.data.title;
-			const memeUpvotes = post.data.ups;
-			const memeNumComments = post.data.num_comments;
-
-			embed.setTitle(`${memeTitle}`);
-			embed.setURL(`${memeUrl}`);
-			embed.setColor('RANDOM');
-			embed.setImage(memeImage);
-			embed.setFooter(`👍 ${memeUpvotes} 💬 ${memeNumComments}`);
-
-			message.channel.send(embed);
-		})
-		.catch(console.error);
     }
     else if (command === "jump") {
         let queue = distube.getQueue(message); 
